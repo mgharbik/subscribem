@@ -1,6 +1,7 @@
 require "warden"
 require "dynamic_form"
 require "subscribem/active_record_extensions"
+require "apartment"
 
 module Subscribem
   class Engine < ::Rails::Engine
