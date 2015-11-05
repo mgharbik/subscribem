@@ -2,6 +2,8 @@ require 'rails_helper'
 
 module Subscribem
   RSpec.describe AccountsController, type: :controller do
+    routes { Subscribem::Engine.routes }
+
     context "creates the account's schema" do
       let!(:account) { Subscribem::Account.new }
       before do
@@ -11,7 +13,7 @@ module Subscribem
       end
       specify do
         expect(account).to receive(:create_schema)
-        post :create, :account => { :name => "First Account" }, :use_route => :subscribem
+        post :create, :account => { :name => "First Account" }
       end
     end
   end
