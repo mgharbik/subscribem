@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151009134455) do
+ActiveRecord::Schema.define(version: 20151105150510) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "subscribem_accounts", force: :cascade do |t|
     t.string   "name"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 20151009134455) do
     t.string   "subdomain"
   end
 
-  add_index "subscribem_accounts", ["subdomain"], name: "index_subscribem_accounts_on_subdomain"
+  add_index "subscribem_accounts", ["subdomain"], name: "index_subscribem_accounts_on_subdomain", using: :btree
 
   create_table "subscribem_members", force: :cascade do |t|
     t.integer  "account_id"
