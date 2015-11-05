@@ -59,6 +59,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    database_cleaner (1.5.1)
     diff-lcs (1.2.5)
     dynamic_form (1.1.4)
     erubis (2.7.0)
@@ -143,6 +144,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara (= 2.4.4)
+  database_cleaner (= 1.5.1)
   factory_girl (= 4.4.0)
   rspec-rails (= 3.3.2)
   subscribem!
