@@ -64,21 +64,7 @@ RSpec.configure do |config|
   end
 
   config.after(:each) do
-    Apartment::Tenant.reset
     DatabaseCleaner.clean
-
-    # To clean all schemas after each test
-    connection = ActiveRecord::Base.connection.raw_connection
-    schemas = connection.query(%Q{
-      SELECT 'drop schema ' || nspname || ' cascade;'
-      from pg_namespace
-      where nspname != 'public'
-      AND nspname NOT LIKE 'pg_%'
-      AND nspname != 'information_schema';
-    })
-    schemas.each do |query|
-      connection.query(query.values.first)
-    end
   end
 end
 

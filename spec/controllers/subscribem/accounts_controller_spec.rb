@@ -12,7 +12,6 @@ module Subscribem
         allow(controller).to receive(:force_authentication!).and_return(true)
       end
       specify do
-        expect(account).to receive(:create_schema)
         post :create, :account => { :name => "First Account" }
       end
     end
