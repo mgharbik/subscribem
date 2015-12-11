@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.name        = "subscribem"
   s.version     = Subscribem::VERSION
   s.authors     = ["Mohammed Gharbi"]
-  s.email       = ["simo163@hotmail.co.uk"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Subscribem."
-  s.description = "TODO: Description of Subscribem."
+  s.email       = ["mgharbik@gmail.com"]
+  s.homepage    = "http://subscribem.io"
+  s.summary     = "Subscribem."
+  s.description = "Subscribem engine for authenticating multi-tenancy rails apps."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
