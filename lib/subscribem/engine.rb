@@ -1,6 +1,7 @@
 require "warden"
 require "dynamic_form"
 require "houser"
+require "braintree"
 
 module Subscribem
   class Engine < ::Rails::Engine
