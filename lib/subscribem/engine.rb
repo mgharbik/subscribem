@@ -27,6 +27,13 @@ module Subscribem
       Rails.application.config.middleware.use Houser::Middleware, :class_name => 'Subscribem::Account'
     end
 
+    initializer "subscribem.middleware.fake_braintree_redirect" do
+      if Rails.env.test?
+        require "fake_braintree_redirect"
+        Rails.application.config.middleware.insert_before Warden::Manager, FakeBraintreeRedirect
+      end
+    end
+
     config.to_prepare do
       root = Subscribem::Engine.root
       extenders_path = root + "app/extenders/**/*.rb"

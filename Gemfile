@@ -13,3 +13,4 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+gem "fake_braintree_redirect", :github => "radar/fake_braintree_redirect"
