@@ -26,6 +26,25 @@ feature "Accounts" do
       expect(page).to have_content("Name can't be blank")
       expect(page).to have_content("Account could not be updated.")
     end
+
+    context "with plans" do
+      let!(:starter_plan) { FactoryGirl.create(:starter_plan) }
+      let!(:extreme_plan) { FactoryGirl.create(:extreme_plan) }
+
+      before do
+        account.update_column(:plan_id, starter_plan.id)
+      end
+
+      scenario "updating an account's plan" do
+        visit root_url
+        click_link "Edit Account"
+        select "Extreme", :from => 'Plan'
+        click_button "Update Account"
+        expect(page).to have_content("Account updated successfully.")
+        expect(page).to have_content("You are now on the 'Extreme' plan.")
+        expect(account.reload.plan).to eq(extreme_plan)
+      end
+    end
   end
 
   context "as a user" do
@@ -39,4 +58,5 @@ feature "Accounts" do
       expect(page).to have_content("You are not allowed to do that.")
     end
   end
+
 end
