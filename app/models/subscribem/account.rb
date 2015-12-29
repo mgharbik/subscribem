@@ -25,5 +25,9 @@ module Subscribem
       account
     end
 
+    def owner?(user)
+      owner == user
+    end
+
   end
 end

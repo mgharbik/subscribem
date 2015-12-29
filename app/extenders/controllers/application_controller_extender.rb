@@ -19,6 +19,11 @@
   end
   helper_method :user_signed_in?
 
+  def owner?
+    current_account.owner?(current_user)
+  end
+  helper_method :owner?
+
   def authenticate_user!
     unless user_signed_in?
       flash[:info] = "Please sign in."
