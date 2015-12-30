@@ -30,6 +30,15 @@ feature "Accounts" do
     context "with plans" do
       let!(:starter_plan) { FactoryGirl.create(:starter_plan) }
       let!(:extreme_plan) { FactoryGirl.create(:extreme_plan) }
+      let(:query_string) do
+        Rack::Utils.build_query(
+          :plan_id => extreme_plan.id,
+          :http_status => 200,
+          :id => "a_fake_id",
+          :kind => "create_customer",
+          :hash => "950c7cfac2601756d270b4b00369ec9b96825132"
+        )
+      end
 
       before do
         account.update_column(:plan_id, starter_plan.id)
@@ -43,13 +52,6 @@ feature "Accounts" do
         expect(Braintree::Subscription).to receive(:create).
             with(subscription_params). and_return(double(:success? => true))
 
-        query_string = Rack::Utils.build_query(
-          :plan_id => extreme_plan.id,
-          :http_status => 200,
-          :id => "a_fake_id",
-          :kind => "create_customer",
-          :hash => "950c7cfac2601756d270b4b00369ec9b96825132"
-        )
         mock_transparent_redirect_response = double(:success? => true)
         allow(mock_transparent_redirect_response).
             to(receive_message_chain(:customer, :credit_cards).
@@ -79,6 +81,35 @@ feature "Accounts" do
         expect(page.current_url).to eq(root_url)
 
         expect(account.reload.plan).to eq(extreme_plan)
+      end
+
+      scenario "can't change account's plan with invalid credit card number" do
+        message = "Credit card number must be 12-19 digits"
+        result = double(:success? => false, :message => message)
+
+        allow(Braintree::TransparentRedirect).to receive(:confirm).
+            with(query_string).
+            and_return(result)
+
+        visit root_url
+        click_link "Edit Account"
+        select "Extreme", :from => 'Plan'
+        click_button "Update Account"
+        expect(page).to have_content("Account updated successfully.")
+        plan_url = subscribem.plan_account_url(
+          :plan_id => extreme_plan.id,
+          :subdomain => account.subdomain)
+        expect(page.current_url).to eq plan_url
+        expect(page).to have_content("You are changing to the 'Extreme' plan")
+        expect(page).to have_content("This plan costs $19.95 per month.")
+        fill_in "Credit card number", :with => "1"
+        fill_in "Name on card", :with => "Dummy user"
+        future_date = "#{Time.now.month + 1}/#{Time.now.year + 1}"
+        fill_in "Expiration date", :with => future_date
+        fill_in "CVV", :with => "123"
+        click_button "Change plan"
+        expect(page).to have_content("Invalid credit card details. Please try again.")
+        expect(page).to have_content("Credit card number must be 12-19 digits")
       end
     end
   end
