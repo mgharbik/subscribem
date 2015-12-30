@@ -1,4 +1,7 @@
 require "rails_helper"
+require "subscribem/testing_support/factories/account_factory"
+require "subscribem/testing_support/factories/plan_factory"
+require "subscribem/testing_support/authentication_helpers"
 
 feature "Accounts" do
   let(:account) { FactoryGirl.create(:account) }

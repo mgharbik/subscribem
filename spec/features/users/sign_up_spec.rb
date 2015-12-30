@@ -1,4 +1,5 @@
 require "rails_helper"
+require "subscribem/testing_support/factories/account_factory"
 
 feature "User signup" do
   let!(:account) { FactoryGirl.create(:account) }
