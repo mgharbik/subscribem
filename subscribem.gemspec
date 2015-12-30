@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Subscribem::VERSION
   s.authors     = ["Mohammed Gharbi"]
   s.email       = ["mgharbik@gmail.com"]
-  s.homepage    = "http://subscribem.io"
-  s.summary     = "Subscribem."
-  s.description = "Subscribem engine for authenticating multi-tenancy rails apps."
+  s.homepage    = "https://github.com/simo163/subscribem"
+  s.summary     = "Subscribem gem from Mulitenancy with Rails"
+  s.description = "Subscribem gem for authenticating multi-tenancy rails apps"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
